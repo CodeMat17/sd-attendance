@@ -138,7 +138,7 @@ export default function FormComponent() {
           <Button
             type='submit'
             className={`w-full ${
-              isLoading ? "bg-sky-900" : "bg-sky-500 hover:bg-sky-700"
+              isLoading ? "bg-sky-950" : "bg-sky-500 hover:bg-sky-700"
             } text-white`}
             disabled={isLoading}>
             {isLoading ? (
@@ -162,63 +162,8 @@ export default function FormComponent() {
           </button>
         </div>
 
-        {/* {formType === "signup" && (
-          <div>
-            <label
-              htmlFor='confirmPassword'
-              className='text-[16px] text-gray-400'>
-              Confirm Password:
-            </label>
-            <Input
-              id='confirmPassword'
-              name='confirmPassword'
-              type='password'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className='w-full bg-gray-900 mt-1.5'
-            />
-            {errors.confirmPassword && (
-              <p className='text-red-500 text-sm'>{errors.confirmPassword}</p>
-            )}
-          </div>
-        )} */}
-
-        {/* <div>
-          <Button
-            type='submit'
-            disabled={loading}
-            className='w-full bg-sky-500 hover:bg-sky-700 text-white'>
-            {loading ? (
-              <MinusIcon className='animate-spin' />
-            ) : formType === "login" ? (
-              "Log in"
-            ) : (
-              "Sign up"
-            )}
-          </Button>
-        </div> */}
+    
       </form>
-      {/* <div className='flex justify-end gap-3 mt-1.5 text-sm'>
-        {formType === "login" ? (
-          <>
-            <p className='text-gray-400'>Visiting for the first time?</p>
-            <button
-              onClick={toggleFormType}
-              className='text-sky-500 hover:text-sky-700'>
-              Sign up
-            </button>
-          </>
-        ) : (
-          <>
-            <p className='text-gray-400'>Already have an account?</p>
-            <button
-              onClick={toggleFormType}
-              className='text-sky-500 hover:text-sky-700'>
-              Log in
-            </button>
-          </>
-        )}
-      </div> */}
     </>
   );
 }

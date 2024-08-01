@@ -25,7 +25,7 @@ const Header = async () => {
           />
         </div>
 
-        <SignOut />
+        <SignOut email={data?.user?.email} />
       </div>
     </nav>
   );
