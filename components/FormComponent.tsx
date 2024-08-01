@@ -95,6 +95,7 @@ export default function FormComponent() {
             id='email'
             name='email'
             type='email'
+            placeholder="Enter your email"
             className='w-full bg-gray-900 mt-1.5'
           />
           {errors.email && (
@@ -110,6 +111,7 @@ export default function FormComponent() {
             id='password'
             name='password'
             type='password'
+            placeholder="Enter your password"
             className='w-full bg-gray-900 mt-1.5'
           />
           {errors.password && (

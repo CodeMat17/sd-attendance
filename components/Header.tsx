@@ -5,6 +5,8 @@ import Image from "next/image";
 // import { useRouter } from "next/navigation";
 import SignOut from "./SignOut";
 
+export const revalidate = 0
+
 const Header = async () => {
   const supabase = createClient();
   // const router = useRouter();
