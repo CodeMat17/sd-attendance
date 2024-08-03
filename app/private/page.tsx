@@ -8,6 +8,7 @@ import AttendanceDays from "@/components/AttendanceDays";
 export const revalidate = 0;
 
 export default async function PrivatePage() {
+
   const supabase = createClient();
 
   const { data: auth_data, error: auth_error } = await supabase.auth.getUser();
@@ -51,8 +52,8 @@ export default async function PrivatePage() {
           />
         </div>
       );
-    }
-  }
+    } 
+  } 
 
   return (
     <div className='px-4 py-8 w-full min-h-screen max-w-6xl mx-auto xl:px-0'>

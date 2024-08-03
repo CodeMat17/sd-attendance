@@ -1,11 +1,12 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-
+import {regno} from '@/utils/regNo'
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import dayjs from "dayjs";
 import { MinusIcon } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -26,11 +27,15 @@ type DataProps = {
 // });
 
 const AttendanceDays = ({ id }: { id: string }) => {
+  // const regno = (process.env.REG_NO || "").split(",");
   const supabase = createClient();
   const [data, setData] = useState<any>([]);
   const [loadingAttendance, setLoadingAttendance] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorLoadingAttendance, setErrorLoadingAttendance] = useState("");
+
+  // console.log('FROM-ENV: ', regno);
+  // console.log("FROM-DATABASE: ", data.reg_no);
 
   const attendanceDate = new Date().toISOString();
 
@@ -45,7 +50,7 @@ const AttendanceDays = ({ id }: { id: string }) => {
       const { data, error } = await supabase
         .from("sd_attendance")
         .select(
-          "id, aug_05, aug_08, aug_12, aug_15, aug_19, aug_22, aug_26, aug_29"
+          "id, reg_no, aug_05, aug_08, aug_12, aug_15, aug_19, aug_22, aug_26, aug_29"
         )
         .eq("id", id)
         .single();
@@ -56,6 +61,13 @@ const AttendanceDays = ({ id }: { id: string }) => {
 
       if (data) {
         setData(data);
+        // if (!regno.includes(data.reg_no)) {
+        //   return (
+        //     <div className="w-full my-12">
+        //       <p className="text-center text-gray-400">.</p>
+        //     </div>
+        //   )
+        // }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -105,228 +117,249 @@ const AttendanceDays = ({ id }: { id: string }) => {
             <p className='text-center'>Reloading attendance data...</p>
           </div>
         ) : (
-          <div>
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
-              {/* Aug_05 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_05 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox disabled checked={data?.aug_05 ? true : false} />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_05 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 05, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_05
-                      ? dayjs(data?.aug_05).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+            <>
+            
+           
 
-              {/* Aug_08 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_08 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_08 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_08 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 08, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_08
-                      ? dayjs(data?.aug_08).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+            {regno.includes(data.reg_no) ? (
+              <div>
+                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
+                  {/* Aug_05 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_05 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox disabled checked={data?.aug_05 ? true : false} />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_05 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 05, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_05
+                          ? dayjs(data?.aug_05).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Aug_12 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_12 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_12 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_12 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 12, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_12
-                      ? dayjs(data?.aug_12).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+                  {/* Aug_08 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_08 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_08 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_08 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 08, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_08
+                          ? dayjs(data?.aug_08).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Aug_15 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_15 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_15 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_15 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 15, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_15
-                      ? dayjs(data?.aug_15).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+                  {/* Aug_12 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_12 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_12 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_12 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 12, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_12
+                          ? dayjs(data?.aug_12).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Aug_19 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_19 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_19 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_19 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 19, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_19
-                      ? dayjs(data?.aug_19).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+                  {/* Aug_15 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_15 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_15 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_15 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 15, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_15
+                          ? dayjs(data?.aug_15).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Aug_22 */}
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_22 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_22 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_22 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 22, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_22
-                      ? dayjs(data?.aug_22).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+                  {/* Aug_19 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_19 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_19 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_19 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 19, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_19
+                          ? dayjs(data?.aug_19).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_26 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_26 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_26 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 26, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_26
-                      ? dayjs(data?.aug_26).format("hh:mm a")
-                      : "00:00"}
-                  </p>
-                </div>
-              </div>
+                  {/* Aug_22 */}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_22 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_22 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_22 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 22, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_22
+                          ? dayjs(data?.aug_22).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
 
-              <div
-                className={`flex items-center gap-3 border ${
-                  data?.aug_29 ? "border-sky-500 border-2" : ""
-                } px-4 py-3 rounded-lg w-full`}>
-                <Checkbox
-                  disabled
-                  checked={data?.aug_29 ? true : false}
-                  // onCheckedChange={field.onChange}
-                  className=''
-                />
-                <div className=''>
-                  <p
-                    className={`font-medium ${
-                      data?.aug_29 ? "text-white" : "text-gray-400"
-                    }`}>
-                    Aug 29, 2024
-                  </p>
-                  <p className='text-sm text-gray-400'>
-                    {data?.aug_29
-                      ? dayjs(data?.aug_29).format("hh:mm a")
-                      : "00:00"}
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_26 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_26 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_26 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 26, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_26
+                          ? dayjs(data?.aug_26).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`flex items-center gap-3 border ${
+                      data?.aug_29 ? "border-sky-500 border-2" : ""
+                    } px-4 py-3 rounded-lg w-full`}>
+                    <Checkbox
+                      disabled
+                      checked={data?.aug_29 ? true : false}
+                      // onCheckedChange={field.onChange}
+                      className=''
+                    />
+                    <div className=''>
+                      <p
+                        className={`font-medium ${
+                          data?.aug_29 ? "text-white" : "text-gray-400"
+                        }`}>
+                        Aug 29, 2024
+                      </p>
+                      <p className='text-sm text-gray-400'>
+                        {data?.aug_29
+                          ? dayjs(data?.aug_29).format("hh:mm a")
+                          : "00:00"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className='mt-8 flex flex-col justify-center items-center'>
+                  <Button
+                    onClick={markAttendance}
+                    disabled={loading}
+                    className='bg-sky-500 hover:bg-sky-700 text-white'>
+                    {loading ? (
+                      <MinusIcon className='animate-spin' />
+                    ) : (
+                      "I Am Present"
+                    )}
+                  </Button>
+                  <p className='text-sm text-gray-400 mt-1'>
+                    {dayjs(attendanceDate).format("MMM DD, YYYY")}
                   </p>
                 </div>
               </div>
-            </div>
-            <div className='mt-8 flex flex-col justify-center items-center'>
-              <Button
-                onClick={markAttendance}
-                disabled={loading}
-                className='bg-sky-500 hover:bg-sky-700 text-white'>
-                {loading ? (
-                  <MinusIcon className='animate-spin' />
-                ) : (
-                  "I Am Present"
-                )}
-              </Button>
-              <p className='text-sm text-gray-400 mt-1'>
-                {dayjs(attendanceDate).format("MMM DD, YYYY")}
-              </p>
-            </div>
-          </div>
+            ) : (
+              <div className='w-full max-w-md mx-auto flex flex-col items-center mt-6 gap-4'>
+                <Image
+                  alt=''
+                  priority
+                  width={80}
+                  height={80}
+                  src='/fail.gif'
+                  className='rounded-full'
+                />
+                <p className='text-center text-gray-400 '>
+                  You are not provisioned to be in this class or you refused to
+                  submit your data when it was asked for in the WhatsApp group.
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
-
     </>
   );
 };

@@ -128,6 +128,7 @@ export default function FormComponent() {
               id='confirmPassword'
               name='confirmPassword'
               type='password'
+              placeholder="Confirm your password"
               className='w-full bg-gray-900 mt-1.5'
             />
             {errors.confirmPassword && (

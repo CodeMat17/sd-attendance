@@ -28,10 +28,10 @@ type Props = {
 
 const FormSchema = z.object({
   name: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
+    message: "Name must be at least 5 characters.",
   }),
-  reg_no: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
+  reg_no: z.string().min(14, {
+    message: "Reg no. must be at least 14 characters.",
   }),
 });
 
