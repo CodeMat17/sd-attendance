@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-
+import { regno } from "@/utils/regNo";
 import CompleteProfileForm from "@/components/CompleteProfileForm";
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
@@ -73,11 +73,26 @@ export default async function PrivatePage() {
       <div className='mt-8'>
         <p className='text-center text-lg text-sky-500 uppercase'>Attendance</p>
         <div className='text-sm mt-4'>
-
-
-          <div>
-            <AttendanceDays id={auth_data?.user?.id} />
-          </div>
+          {regno.includes(data.reg_no) ? (
+            <div>
+              <AttendanceDays id={auth_data?.user?.id} />
+            </div>
+          ) : (
+            <div className='w-full max-w-md mx-auto flex flex-col items-center mt-6 gap-4'>
+              <Image
+                alt=''
+                priority
+                width={80}
+                height={80}
+                src='/fail.gif'
+                className='rounded-full'
+              />
+              <p className='text-center text-[16px] text-gray-400 '>
+                You are not provisioned to be in this class or you refused to
+                submit your data when it was asked for in the WhatsApp group.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
