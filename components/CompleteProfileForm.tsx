@@ -61,7 +61,11 @@ const CompleteProfileForm = ({ email, id }: Props) => {
         .select();
 
       if (error) {
-        setErrorMsg(error.message);
+        if (error.message.includes("sd_attendance_reg_no_key")) {
+          setErrorMsg("Reg. no. already exists.");
+        } else {
+          setErrorMsg(error.message);
+        }
       }
 
       if (!error) {

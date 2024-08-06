@@ -5,10 +5,8 @@ import { login, signup } from "@/app/login/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinusIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
-
 
 // Define the schema for login and signup
 const loginSchema = z.object({
@@ -52,25 +50,25 @@ export default function FormComponent() {
       confirmPassword: formData.get("confirmPassword") as string,
     };
 
-      const validation = isLogin
-        ? loginSchema.safeParse(data)
-        : signupSchema.safeParse(data);
-      if (!validation.success) {
-        const formErrors: Record<string, string> = {};
-        validation.error.errors.forEach((error) => {
-          if (error.path.length > 0) {
-            formErrors[error.path[0]] = error.message;
-          }
-        });
-        setErrors(formErrors);
-        return;
-      }
+    const validation = isLogin
+      ? loginSchema.safeParse(data)
+      : signupSchema.safeParse(data);
+    if (!validation.success) {
+      const formErrors: Record<string, string> = {};
+      validation.error.errors.forEach((error) => {
+        if (error.path.length > 0) {
+          formErrors[error.path[0]] = error.message;
+        }
+      });
+      setErrors(formErrors);
+      return;
+    }
 
     try {
       setIsLoading(true);
-          const formActionData = new FormData();
-          formActionData.append("email", data.email);
-          formActionData.append("password", data.password);
+      const formActionData = new FormData();
+      formActionData.append("email", data.email);
+      formActionData.append("password", data.password);
 
       if (isLogin) {
         await login(formActionData);
@@ -95,7 +93,7 @@ export default function FormComponent() {
             id='email'
             name='email'
             type='email'
-            placeholder="Enter your email"
+            placeholder='Enter your email'
             className='w-full bg-gray-900 mt-1.5'
           />
           {errors.email && (
@@ -111,7 +109,7 @@ export default function FormComponent() {
             id='password'
             name='password'
             type='password'
-            placeholder="Enter your password"
+            placeholder='Enter your password'
             className='w-full bg-gray-900 mt-1.5'
           />
           {errors.password && (
@@ -128,7 +126,7 @@ export default function FormComponent() {
               id='confirmPassword'
               name='confirmPassword'
               type='password'
-              placeholder="Confirm your password"
+              placeholder='Confirm your password'
               className='w-full bg-gray-900 mt-1.5'
             />
             {errors.confirmPassword && (
@@ -155,17 +153,16 @@ export default function FormComponent() {
         </div>
 
         <div className='text-sm text-gray-400 flex justify-end mt-1'>
-          <button
+          <p className='text-sm text-gray-400'>Sign Up is disabled</p>
+          {/* <button
             type='button'
             onClick={() => setIsLogin(!isLogin)}
             className='text-sky-500 hover:text-sky-700'>
             {isLogin
               ? "Visiting for the first time? Sign up"
               : "Already have an account? Log in"}
-          </button>
+          </button> */}
         </div>
-
-    
       </form>
     </>
   );

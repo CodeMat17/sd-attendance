@@ -1,14 +1,12 @@
-import { redirect } from "next/navigation";
-import { regno } from "@/utils/regNo";
+import AttendanceDays from "@/components/AttendanceDays";
 import CompleteProfileForm from "@/components/CompleteProfileForm";
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
-import AttendanceDays from "@/components/AttendanceDays";
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
 export default async function PrivatePage() {
-
   const supabase = createClient();
 
   const { data: auth_data, error: auth_error } = await supabase.auth.getUser();
@@ -52,8 +50,8 @@ export default async function PrivatePage() {
           />
         </div>
       );
-    } 
-  } 
+    }
+  }
 
   return (
     <div className='px-4 py-8 w-full min-h-screen max-w-6xl mx-auto xl:px-0'>
@@ -73,7 +71,9 @@ export default async function PrivatePage() {
       <div className='mt-8'>
         <p className='text-center text-lg text-sky-500 uppercase'>Attendance</p>
         <div className='text-sm mt-4'>
-          {regno.includes(data.reg_no) ? (
+          <AttendanceDays id={auth_data?.user?.id} />
+
+          {/* {regno.includes(data.reg_no) ? (
             <div>
               <AttendanceDays id={auth_data?.user?.id} />
             </div>
@@ -92,7 +92,7 @@ export default async function PrivatePage() {
                 submit your data when it was asked for in the WhatsApp group.
               </p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
