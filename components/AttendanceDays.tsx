@@ -308,7 +308,7 @@ const AttendanceDays = ({ id }: { id: string }) => {
               </div>
               </div>
               
-            <div className='mt-8 flex flex-col justify-center items-center'>
+            {/* <div className='mt-8 flex flex-col justify-center items-center'>
               <Button
                 onClick={markAttendance}
                 disabled={loading}
@@ -322,7 +322,7 @@ const AttendanceDays = ({ id }: { id: string }) => {
               <p className='text-sm text-gray-400 mt-1'>
                 {dayjs(attendanceDate).format("MMM DD, YYYY")}
               </p>
-              </div>
+              </div> */}
               
           </div>
         )}
