@@ -4,7 +4,7 @@
 import { login, signup } from "@/app/login/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MinusIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, MinusIcon } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -36,6 +36,11 @@ export default function FormComponent() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [flipPW, setFlipPW] = useState(false);
+
+  const flipPassword = () => {
+    setFlipPW(!flipPW);
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -89,6 +94,7 @@ export default function FormComponent() {
           <label htmlFor='email' className='text-[16px] text-gray-400'>
             Email:
           </label>
+
           <Input
             id='email'
             name='email'
@@ -96,6 +102,7 @@ export default function FormComponent() {
             placeholder='Enter your email'
             className='w-full bg-gray-900 mt-1.5'
           />
+
           {errors.email && (
             <p className='text-red-500 text-sm'>{errors.email}</p>
           )}
@@ -105,13 +112,25 @@ export default function FormComponent() {
           <label htmlFor='password' className='text-[16px] text-gray-400'>
             Password:
           </label>
-          <Input
-            id='password'
-            name='password'
-            type='password'
-            placeholder='Enter your password'
-            className='w-full bg-gray-900 mt-1.5'
-          />
+          <div className='flex items-center justify-center gap-3'>
+            <Input
+              id='password'
+              name='password'
+              type={`${flipPW ? "text" : "password"}`}
+              placeholder='Enter your password'
+              className='w-full bg-gray-900 mt-1.5'
+            />
+
+            <div
+              onClick={flipPassword}
+              className='mt-1 border p-2 rounded-md hover: cursor-pointer hover:bg-zinc-900'>
+              {flipPW ? (
+                <EyeOffIcon className='w-5 h-5' />
+              ) : (
+                <EyeIcon className='w-5 h-5' />
+              )}
+            </div>
+          </div>
           {errors.password && (
             <p className='text-red-500 text-sm'>{errors.password}</p>
           )}
