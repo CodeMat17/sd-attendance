@@ -123,7 +123,7 @@ export default function FormComponent() {
 
             <div
               onClick={flipPassword}
-              className='mt-1 border p-2 rounded-md hover: cursor-pointer hover:bg-zinc-900'>
+              className='mt-1 border p-2 rounded-md hover: cursor-pointer bg-gray-900 hover:bg-gray-950'>
               {flipPW ? (
                 <EyeOffIcon className='w-5 h-5' />
               ) : (
