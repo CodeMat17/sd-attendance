@@ -70,7 +70,7 @@ const AttendanceDays = ({ id }: { id: string }) => {
 
       const { data, error } = await supabase
         .from("sd_attendance")
-        .update({ aug_12: attendanceDate })
+        .update({ aug_15: attendanceDate })
         .eq("id", id)
         .select();
 
